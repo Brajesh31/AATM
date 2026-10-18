@@ -37,4 +37,4 @@ npx --package typescript tsc --noEmit
 
 Manually exercise each prompt path, including cancellation and unexpected input.
 
-Last updated: 2026-10-17 23:46 UTC
+Last updated: 2026-10-18 02:30 UTC
