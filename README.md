@@ -121,3 +121,5 @@ These limitations are documented rather than silently hidden. Fixing them would 
 ## Contribution
 
 Improvements should preserve the educational scope, use fictional data, and include tests or reproducible manual validation. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+Last updated: 2026-11-13 19:38 UTC
