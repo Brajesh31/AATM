@@ -1,40 +1,39 @@
 # AATM
 
-AATM is a TypeScript/Node.js command-line project built around interactive terminal prompts. The repository contains TypeScript source files, an Inquirer dependency, and Node.js type definitions.
+A small interactive ATM-flow exercise implemented in JavaScript and TypeScript with Inquirer prompts. It demonstrates a terminal sequence for entering a user ID and PIN, selecting an account type, and choosing a withdrawal or fast-cash amount.
+
+> **Important:** This is an educational simulation, not a banking application. It does not authenticate against a bank, maintain a real account ledger, or connect to payment infrastructure. Never enter a real banking PIN or credentials.
 
 ## Requirements
 
-- Node.js 18 or newer
+- Node.js 18+
 - npm
-- TypeScript tooling compatible with the project configuration
 
 ## Setup
 
-```powershell
+```bash
 npm ci
 ```
 
-The package currently exposes the source entrypoints directly and does not define a production build or test script. Run the intended TypeScript entrypoint with your configured TypeScript runner, or add a project-specific build script before distributing compiled output.
+## Run
 
-## Project files
+The repository contains both `atm.js` and `atm.ts`. The JavaScript file uses native ES modules:
 
-- `atm.ts` contains the TypeScript implementation.
-- `atm.js` contains the JavaScript entrypoint or generated counterpart.
-- `tsconfig.json` contains the TypeScript compiler configuration.
-- `package.json` defines the Inquirer dependency and development metadata.
-
-## Development guidance
-
-Keep interactive prompts resilient to cancellation and invalid input. Avoid printing credentials, private data, or full environment contents. If this project becomes a published CLI, add explicit `build`, `start`, and automated `test` scripts and document the command-line interface.
-
-## Validation
-
-Review the TypeScript configuration and run a type check before submitting changes. Because TypeScript is not currently listed in `devDependencies`, use a temporary CLI package or add TypeScript to the project toolchain:
-
-```powershell
-npx --package typescript tsc --noEmit
+```bash
+node atm.js
 ```
 
-Manually exercise each prompt path, including cancellation and unexpected input.
+The TypeScript entrypoint requires a TypeScript execution tool or compilation. TypeScript is not currently declared in the package's development dependencies, so configure that toolchain before relying on `atm.ts`.
 
-Last updated: 2026-11-13 16:58 UTC
+## Current behavior and limitations
+
+- Prompts for a user ID, PIN, account type, and transaction choice.
+- Offers a fixed list of fast-cash amounts.
+- The TypeScript version contains a random in-memory balance demonstration.
+- There is no persistent account data, secure PIN verification, transaction history, balance integrity, or real withdrawal operation.
+- The JavaScript and TypeScript implementations are not fully consistent.
+- The package currently has no meaningful automated test script.
+
+## Development
+
+See [development notes](docs/DEVELOPMENT.md), [architecture](docs/ARCHITECTURE.md), and [security guidance](SECURITY.md). Keep this project clearly labelled as a simulation unless a secure backend and proper financial controls are designed and implemented.
