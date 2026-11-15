@@ -43,7 +43,11 @@
 19. [🤝 Contributing](#-contributing)
 20. [🗺️ Future Learning Opportunities](#️-future-learning-opportunities)
 21. [📖 Documentation Index](#-documentation-index)
-22. [📄 License](#-license)
+22. [❓ FAQ](#-faq)
+23. [🧰 Maintainer Guide](#-maintainer-guide)
+24. [🏛️ Governance](#️-governance)
+25. [📜 Changelog](#-changelog)
+26. [📄 License](#-license)
 
 ---
 
@@ -569,6 +573,22 @@ The following are ideas for future educational work, not implemented capabilitie
 A production financial product would require a much broader architecture, security design, audit controls, authorization, and compliance review. This repository is not a foundation for deploying real financial transactions.
 
 ---
+
+## ❓ FAQ
+
+Common questions are answered in [docs/FAQ.md](docs/FAQ.md), including simulation boundaries, example inputs, entrypoints, and current testing limitations.
+
+## 🧰 Maintainer Guide
+
+Repository maintenance expectations, release preparation, dependency hygiene, workflow review, and issue triage are documented in [MAINTAINERS.md](MAINTAINERS.md).
+
+## 🏛️ Governance
+
+See [GOVERNANCE.md](GOVERNANCE.md) for the maintainer model and project decision process.
+
+## 📜 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for verified project changes and maintenance history.
 
 ## 📖 Documentation Index
 
