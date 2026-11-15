@@ -9,26 +9,26 @@ This policy explains the security boundary of the current program, how to report
 
 ## 📚 Table of Contents
 
-- [Security Scope](#-security-scope)
-- [Supported Version](#-supported-version)
-- [Reporting a Vulnerability](#-reporting-a-vulnerability)
-- [Information to Include](#-information-to-include)
-- [Safe Research and Testing](#-safe-research-and-testing)
-- [Current Application Security Boundary](#-current-application-security-boundary)
-- [Credentials and Sensitive Data](#-credentials-and-sensitive-data)
-- [Prompt Input and Validation](#-prompt-input-and-validation)
-- [Dependencies and Supply Chain](#-dependencies-and-supply-chain)
-- [GitHub Actions and Repository Permissions](#-github-actions-and-repository-permissions)
-- [Incident Response](#-incident-response)
-- [Maintainer Security Checklist](#-maintainer-security-checklist)
-- [Scope Limitations](#-scope-limitations)
+- [🧭 Security Scope](#-security-scope)
+- [📦 Supported Version](#-supported-version)
+- [🚨 Reporting a Vulnerability](#-reporting-a-vulnerability)
+- [🧾 Information to Include](#-information-to-include)
+- [🧪 Safe Research and Testing](#-safe-research-and-testing)
+- [🧱 Current Application Security Boundary](#-current-application-security-boundary)
+- [🔑 Credentials and Sensitive Data](#-credentials-and-sensitive-data)
+- [🔢 Prompt Input and Validation](#-prompt-input-and-validation)
+- [📦 Dependencies and Supply Chain](#-dependencies-and-supply-chain)
+- [⚙️ GitHub Actions and Repository Permissions](#️-github-actions-and-repository-permissions)
+- [🚑 Incident Response](#-incident-response)
+- [✅ Maintainer Security Checklist](#-maintainer-security-checklist)
+- [🚧 Scope Limitations](#-scope-limitations)
 
-## 🎯 Security Scope
+## 🧭 Security Scope
 
-This policy applies to security concerns in:
+This policy applies to:
 - `atm.js` and `atm.ts`.
 - Inquirer prompt handling and answer processing.
-- npm dependencies and lockfile.
+- npm dependencies and the lockfile.
 - TypeScript configuration.
 - GitHub Actions workflows.
 - Repository documentation and examples.
@@ -36,13 +36,13 @@ This policy applies to security concerns in:
 
 AATM currently runs as a local CLI process. It does not include a backend, database, bank connection, network API, account directory, or transaction ledger in the inspected source.
 
-Third-party services and the user's local machine have separate security boundaries and policies.
+Third-party providers, hosting accounts, user-controlled forks, and local machines have separate security boundaries.
 
 ## 📦 Supported Version
 
 Security reports are considered against the current implementation on the default branch, `main`.
 
-The project does not publish a long-term support matrix or a guaranteed security patch schedule. Include the affected commit, file, dependency version, and reproduction steps where known.
+The repository does not publish a long-term support matrix or a guaranteed security patch schedule. Include the affected commit, file, dependency version, and reproduction steps where known.
 
 ## 🚨 Reporting a Vulnerability
 
@@ -61,18 +61,18 @@ Private reporting route:
 
 If private reporting is unavailable, contact the repository owner through the contact method listed on the owner's GitHub profile. Do not send passwords, API tokens, or sensitive exploit material through an unverified channel.
 
-For ordinary programming defects, use a public bug report. A vulnerability should not be disclosed as an ordinary public issue.
+For ordinary programming defects, use the public issue templates. A vulnerability should not be disclosed as an ordinary public issue.
 
 ## 🧾 Information to Include
 
 A useful report may include:
-- A concise title and issue category.
+- A concise title and vulnerability category.
 - The affected file or dependency.
 - The affected commit or version.
 - Node.js and npm versions.
 - Operating system.
 - The command used to run the program.
-- A safe reproduction sequence.
+- Safe reproduction steps.
 - Expected and actual behaviour.
 - The security impact.
 - Sanitized logs or screenshots.
@@ -131,45 +131,43 @@ Never add:
 - Private test data.
 - Sensitive terminal output.
 
-Use fictional values in examples. A sample value should not look like a real personal account identifier if it could be confused with one.
-
-If a secret is accidentally committed:
+Use fictional values in examples. If a secret is accidentally committed:
 1. Revoke or rotate it at the service that issued it.
 2. Check whether it was used.
 3. Remove it from active files.
 4. Review repository and CI access.
-5. Assess whether any external notification is required.
+5. Assess whether external notification is required.
 6. Record the incident without copying the secret into another report.
 
 Removing the secret from the latest version does not make an exposed credential safe.
 
 ## 🔢 Prompt Input and Validation
 
-Inquirer prompts help collect input, but a prompt type is not a complete security or business-validation system.
+Inquirer prompts help collect input, but a prompt type is not a complete business-validation system.
 
-For example, a numeric prompt does not by itself enforce:
+A number prompt does not by itself enforce:
 - A positive amount.
-- A maximum withdrawal amount.
+- A maximum amount.
 - A permitted currency.
 - A valid account state.
 - A real available balance.
 - User authorization.
 - Transaction limits.
 
-The current implementation should be treated as a demonstration of prompt branching. If validation logic is added in future source changes, it should be isolated, tested, and documented. Do not describe local input checks as bank-grade security.
+The current implementation demonstrates prompt branching only. If validation is added in future source changes, it should be isolated, tested, and documented. Local input checks must not be described as bank-grade security.
 
 ## 📦 Dependencies and Supply Chain
 
 The application uses Inquirer and its dependency tree. Dependency updates should be reviewed rather than applied blindly.
 
 A responsible update process:
-1. Inspect the package advisory or reason for an update.
+1. Inspect the advisory or reason for an update.
 2. Confirm the affected package and version.
 3. Review compatibility notes.
 4. Update dependencies with npm.
 5. Review the lockfile diff.
 6. Run the existing syntax and type checks.
-7. Manually exercise the interactive prompts.
+7. Manually exercise interactive prompts.
 8. Document any behaviour or runtime change.
 
 Do not add a package without a clear need. Avoid committing new files from installed dependencies as part of an ordinary contribution.
@@ -180,38 +178,38 @@ The current CI workflow requires repository read access to check out code and ru
 
 Review third-party GitHub Actions before introducing them. Use trusted actions and pin versions responsibly. Do not expose secrets in logs.
 
-The README automation workflow currently has write access to repository contents because it commits a timestamp update. That workflow is operational automation, not an application security feature.
+The README automation workflow currently has write access to repository contents because it commits a timestamp update. That workflow is repository automation, not an application security feature.
 
 ## 🚑 Incident Response
 
 If sensitive information is committed or exposed:
 1. Identify the data type and affected commit.
 2. Revoke or rotate credentials where relevant.
-3. Restrict access to affected services.
+3. Restrict affected access.
 4. Review available logs.
 5. Determine whether the information was accessed.
-6. Remove the active exposure.
+6. Remove active exposure.
 7. Assess who may be affected.
-8. Follow applicable notification obligations where required.
-9. Document the corrective action without reproducing the secret.
+8. Follow applicable notification obligations.
+9. Document corrective action without reproducing the secret.
 
 Do not assume every incident has the same legal requirements. Seek appropriate professional guidance if real personal or financial data is involved.
 
 ## ✅ Maintainer Security Checklist
 
-- [ ] The README clearly states that AATM is not a banking product.
+- [ ] README clearly states that AATM is not a banking product.
 - [ ] Examples use fictional values only.
 - [ ] No real IDs, PINs, or financial information are committed.
-- [ ] Public issue templates warn against including credentials.
+- [ ] Issue templates warn against including credentials.
 - [ ] Private vulnerability reporting is reachable.
 - [ ] Dependency updates are reviewed.
 - [ ] GitHub Actions permissions are limited.
 - [ ] CI logs do not expose secrets.
-- [ ] Any future external integration receives a security review.
+- [ ] Future external integrations receive a security review.
 - [ ] Documentation describes actual behaviour rather than implying real financial controls.
 
 ## 🚧 Scope Limitations
 
 This policy does not certify the application as secure, authorize testing of real financial services, provide banking advice, or guarantee a response time.
 
-If AATM is ever expanded beyond a learning simulation, that would require a new architecture and professional security review before any real account or financial data is introduced. The current code must not be used for real financial operations.
+If AATM is ever expanded beyond a learning simulation, that would require a new architecture and professional security review before any real account or financial data is introduced.
