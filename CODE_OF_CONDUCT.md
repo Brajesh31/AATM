@@ -1,22 +1,22 @@
 # 🌱 Community Code of Conduct
 
-AATM is an educational project for learning about interactive command-line prompts and basic program flow. The repository should remain a respectful, constructive, and welcoming place for people who want to learn, report problems, contribute improvements, or discuss technical decisions.
+AATM is an educational project for learning interactive command-line prompts and basic program flow. The repository should remain a respectful, constructive, and welcoming place for people who want to learn, report problems, contribute improvements, or discuss technical decisions.
 
-This Code of Conduct explains the behaviour expected in project-managed spaces and the process for reporting concerns.
+This Code of Conduct defines expected behaviour in project-managed spaces and explains how concerns can be raised and addressed.
 
 ## 📚 Table of Contents
 
-- [Our Commitment](#-our-commitment)
-- [Scope](#-scope)
-- [Expected Behaviour](#-expected-behaviour)
-- [Unacceptable Behaviour](#-unacceptable-behaviour)
-- [Technical Discussion and Review](#-technical-discussion-and-review)
-- [Reporting a Concern](#-reporting-a-concern)
-- [Information to Include](#-information-to-include)
-- [Maintainer Responsibilities](#-maintainer-responsibilities)
-- [Enforcement](#-enforcement)
-- [Confidentiality and Retaliation](#-confidentiality-and-retaliation)
-- [Relationship to Project Policies](#-relationship-to-project-policies)
+- [🤝 Our Commitment](#-our-commitment)
+- [🧭 Scope](#-scope)
+- [✅ Expected Behaviour](#-expected-behaviour)
+- [🚫 Unacceptable Behaviour](#-unacceptable-behaviour)
+- [💬 Technical Discussion and Review](#-technical-discussion-and-review)
+- [📣 Reporting a Concern](#-reporting-a-concern)
+- [📝 Information to Include](#-information-to-include)
+- [🛠️ Maintainer Responsibilities](#️-maintainer-responsibilities)
+- [⚖️ Enforcement](#️-enforcement)
+- [🔒 Confidentiality and Retaliation](#-confidentiality-and-retaliation)
+- [📚 Relationship to Other Policies](#-relationship-to-other-policies)
 
 ## 🤝 Our Commitment
 
@@ -33,7 +33,7 @@ This policy applies to:
 - Documentation and contribution channels.
 - Project-related communications where participants are acting in connection with AATM.
 
-It also applies to conduct outside these spaces when it directly targets project participants or materially affects their ability to collaborate.
+It can also apply to conduct outside these spaces when it directly targets project participants or materially affects their ability to collaborate.
 
 ## ✅ Expected Behaviour
 
@@ -42,23 +42,23 @@ Participants are expected to:
 ### Be respectful
 - Use clear and considerate language.
 - Critique code and decisions rather than individuals.
-- Avoid insults, stereotypes, and hostile assumptions.
+- Avoid insults and hostile assumptions.
 - Respect different levels of technical experience.
-- Give other people reasonable time to respond.
+- Give others reasonable time to respond.
 
 ### Make feedback constructive
 - Explain the problem and its consequence.
-- Provide reproduction steps or examples where possible.
+- Provide evidence or reproduction steps where possible.
 - Suggest practical alternatives when known.
-- Distinguish a correctness defect from a personal preference.
-- Acknowledge when an issue has been resolved.
+- Distinguish correctness defects from preferences.
+- Acknowledge when a concern is resolved.
 
 ### Support learning
 - Welcome reasonable beginner questions.
-- Explain unfamiliar technical terms when useful.
-- Help keep examples accurate and safe.
+- Explain unfamiliar terms when useful.
+- Keep examples accurate and safe.
 - Avoid mocking mistakes or spelling errors.
-- Encourage contributors to verify behaviour rather than guess.
+- Encourage verification rather than guesswork.
 
 ### Be honest
 - Do not fabricate test results.
@@ -75,12 +75,12 @@ The following are not acceptable:
 - Hate speech or discriminatory stereotypes.
 - Publishing private information without permission.
 - Stalking or repeated unwanted contact.
-- Deliberately derailing or flooding project discussions.
+- Deliberately derailing or flooding discussions.
 - Impersonation or deceptive attribution.
 - Retaliation against good-faith reporters.
 - Repeatedly ignoring reasonable moderation instructions.
 - Publishing credentials, PINs, account numbers, or private financial data.
-- Encouraging others to enter real banking credentials into this simulation.
+- Encouraging people to enter real banking credentials into this simulation.
 
 A severe incident may require immediate action. Repeated lower-level behaviour may also become unacceptable when it forms a pattern.
 
@@ -91,7 +91,7 @@ Strong technical disagreement is allowed. Participants may question prompt desig
 A useful review comment:
 1. Identifies the relevant file or behaviour.
 2. Explains the technical concern.
-3. Provides evidence or a reproduction where possible.
+3. Provides evidence or reproduction where possible.
 4. Suggests a practical correction or alternative.
 5. Avoids assumptions about the contributor's ability or intention.
 
@@ -99,8 +99,8 @@ Examples:
 
 | Unhelpful | Constructive |
 |---|---|
-| “This code is useless.” | “The answer key contains a trailing space, so the property lookup may not return the entered value.” |
-| “You do not understand TypeScript.” | “The conditional prompt means the answer property may be absent. Could the type represent that possibility?” |
+| “This code is useless.” | “The answer key has trailing whitespace, so the property lookup may not return the entered value.” |
+| “You do not understand TypeScript.” | “The conditional prompt means this answer property may be absent. Could the type represent that possibility?” |
 | “This documentation is nonsense.” | “The guide says JavaScript prints a remaining balance, but the active JavaScript source currently ends after prompt collection.” |
 
 Maintainers may reject a proposal because it is outside scope, unsafe, incomplete, or technically unsuitable. Respectful disagreement with that decision is allowed.
@@ -112,9 +112,9 @@ Contact the repository owner privately through the contact method listed on the 
 When reporting:
 - Describe what happened.
 - Include relevant issue or pull request links.
-- Provide dates or approximate times where useful.
-- Share only the information needed to understand the concern.
-- Mention whether there is an immediate safety or privacy risk.
+- Provide approximate dates where useful.
+- Share only information needed to understand the concern.
+- Mention any immediate safety or privacy risk.
 
 Do not publish private messages or personal information in a public issue.
 
@@ -131,7 +131,7 @@ A report may include:
 - Whether the behaviour is repeated.
 - Any immediate privacy or safety concern.
 
-You do not need to investigate the incident or confront the other person before reporting it.
+You do not need to investigate an incident or confront the other person before reporting it.
 
 ## 🛠️ Maintainer Responsibilities
 
@@ -147,13 +147,13 @@ Maintainers should:
 ## ⚖️ Enforcement
 
 Possible responses include:
-1. A private or public request to correct behaviour.
+1. A request to correct behaviour.
 2. A formal warning.
 3. Removal or moderation of inappropriate content.
 4. Temporary restriction from project participation.
 5. Permanent exclusion from project spaces.
 
-The response should be proportionate to the severity, context, and repetition of the conduct. The steps do not have to be applied in a fixed order.
+The response should be proportionate to severity, context, and repetition. The steps do not have to be applied in a fixed order.
 
 ## 🔒 Confidentiality and Retaliation
 
@@ -163,7 +163,7 @@ Retaliation against someone who reports a concern in good faith or participates 
 
 This policy must not be used to silence reasonable technical criticism, reject a valid bug report, or punish someone for disagreeing with a maintainer.
 
-## 📚 Relationship to Project Policies
+## 📚 Relationship to Other Policies
 
 This policy works alongside:
 - [CONTRIBUTING.md](CONTRIBUTING.md), for contribution procedures.
