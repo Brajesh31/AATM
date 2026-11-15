@@ -1,40 +1,39 @@
 # 🏗️ AATM Architecture and Code Walkthrough
 
-This document explains the current architecture of AATM. It describes the actual program boundary, the responsibilities of the main files, the use of Inquirer, and the differences between the JavaScript and TypeScript implementations.
+This document explains the current architecture of AATM, including its application boundary, main files, dependency responsibilities, prompt model, and the differences between its JavaScript and TypeScript implementations.
 
-AATM is a local command-line learning exercise. It is not a service-oriented application, does not expose an HTTP API, and does not connect to a bank or database.
+AATM is a local, single-process command-line exercise. It is not a service-oriented application, does not expose an HTTP API, and does not connect to a bank or database.
 
 ## 📚 Table of Contents
 
-- [System Boundary](#-system-boundary)
-- [Repository Structure](#-repository-structure)
-- [Runtime and Dependencies](#-runtime-and-dependencies)
-- [Module System](#-module-system)
-- [JavaScript Entry Point](#-javascript-entry-point)
-- [TypeScript Entry Point](#-typescript-entry-point)
-- [Prompt Definition Model](#-prompt-definition-model)
-- [Answer Object and Data Flow](#-answer-object-and-data-flow)
-- [Conditional Prompt Behaviour](#-conditional-prompt-behaviour)
-- [Demonstration Calculation](#-demonstration-calculation)
-- [Current Architectural Limitations](#-current-architectural-limitations)
-- [Possible Future Separation of Concerns](#-possible-future-separation-of-concerns)
-- [Safe Extension Boundaries](#-safe-extension-boundaries)
+- [🎯 System Boundary](#-system-boundary)
+- [🗂️ Repository Structure](#️-repository-structure)
+- [⚙️ Runtime and Dependencies](#️-runtime-and-dependencies)
+- [📦 Module System](#-module-system)
+- [🟨 JavaScript Entry Point](#-javascript-entry-point)
+- [🔷 TypeScript Entry Point](#-typescript-entry-point)
+- [🧩 Prompt Definition Model](#-prompt-definition-model)
+- [🔄 Answer Object and Data Flow](#-answer-object-and-data-flow)
+- [🔀 Conditional Prompt Behaviour](#-conditional-prompt-behaviour)
+- [🧮 Demonstration Calculation](#-demonstration-calculation)
+- [⚠️ Current Architectural Limitations](#️-current-architectural-limitations)
+- [🧱 Possible Future Separation](#-possible-future-separation)
+- [🛡️ Safe Extension Boundaries](#️-safe-extension-boundaries)
 
 ## 🎯 System Boundary
 
-AATM is a single-process CLI program run locally with Node.js. The primary runtime interaction is with the terminal. Inquirer displays questions, gathers answers, and returns an object that the entrypoint can inspect.
+AATM runs locally in a Node.js process. The terminal is its user interface. Inquirer displays questions, gathers values, and returns an answer object to the entrypoint.
 
-The repository does not define:
-- A web server or HTTP API.
-- A customer database or user directory.
+The inspected repository does not define:
+- An HTTP server or API.
+- A database or persistent account ledger.
 - A bank integration.
-- An account ledger.
-- Persistent transaction records.
-- A secure credential store.
-- A real authorization service.
-- A server-side transaction engine.
+- A customer identity provider.
+- A secure PIN store.
+- A transaction authorization service.
+- A persistent audit history.
 
-The program is an educational simulation. An ID-like input and a PIN-like number are prompt values only. They do not authenticate a user.
+The ID-like and PIN-like values are collected for demonstration only. They do not authenticate anyone.
 
 ## 🗂️ Repository Structure
 
@@ -43,197 +42,181 @@ The program is an educational simulation. An ID-like input and a PIN-like number
 | `atm.js` | JavaScript prompt sequence |
 | `atm.ts` | TypeScript prompt sequence and random-value demonstration |
 | `package.json` | npm metadata, scripts, and dependencies |
-| `package-lock.json` | Locked dependency tree |
+| `package-lock.json` | Locked npm dependency resolution |
 | `tsconfig.json` | TypeScript compiler settings |
 | `.github/workflows/ci.yml` | JavaScript syntax and TypeScript validation |
-| `.github/workflows/update-readme.yml` | Existing timestamp update automation |
+| `.github/workflows/update-readme.yml` | Existing README timestamp automation |
 | `docs/` | Technical documentation |
-| `LICENSE` | MIT License |
+| `LICENSE` | MIT license text |
 
-The repository also contains a tracked `atm` path and a large `node_modules/` tree. Their purpose and tracking history should be reviewed before changing them. This documentation does not modify those paths.
+The Git tree also contains a tracked `atm` path and `node_modules/` directory. Their purpose and tracking history should be verified before changing them. This documentation update does not modify those paths.
 
 ## ⚙️ Runtime and Dependencies
 
 ### Node.js
-
-Node.js executes the JavaScript entrypoint and provides access to the installed package dependencies. The current CI workflow uses Node.js 20. Node.js 18 or newer is the recommended local baseline, subject to dependency compatibility.
+Node.js executes the JavaScript entrypoint and resolves installed project dependencies. The CI workflow currently uses Node.js 20. The README recommends Node.js 18 or newer for local development, subject to dependency compatibility.
 
 ### Inquirer
+Inquirer handles terminal interaction. The current source uses input, number, and list prompts. It also uses conditional callbacks to display different questions based on previous answers.
 
-Inquirer is used to prompt for:
-- Text-like user identifiers.
-- Numeric PIN-like input.
-- Account category selection.
-- Transaction type selection.
-- A preset or manually entered amount.
-
-Inquirer is a terminal UI library. It does not implement bank authentication, account authorization, or financial validation.
+Inquirer is a prompt library. It does not implement financial authentication, authorization, account validation, or transaction security.
 
 ### TypeScript compiler
-
-The project includes TypeScript source and a compiler configuration. The current CI workflow invokes TypeScript through `npx` rather than a directly declared project compiler dependency. The compiler is run with `--noEmit`, so the workflow validates types without generating JavaScript files.
+The repository contains TypeScript source and a compiler configuration. CI obtains TypeScript through an `npx` command and uses `--noEmit` so no JavaScript output is generated.
 
 ## 📦 Module System
 
-The package declares:
+The package manifest declares `"type": "module"`. Node.js therefore treats `.js` files in the package scope as ES modules.
 
-```json
-{
-  "type": "module"
-}
-```
-
-This causes Node.js to interpret `.js` files in the package scope as ES modules. The JavaScript implementation uses:
+The JavaScript entrypoint uses:
 
 ```js
 import inquirer from "inquirer";
 ```
 
-Both entrypoints use top-level `await` with Inquirer's prompt API. Use a modern Node.js runtime that supports top-level await in ES modules.
+Both entrypoints use top-level `await` when waiting for the prompt result. Modern Node.js supports this in ES modules.
 
 ## 🟨 JavaScript Entry Point
 
-The JavaScript implementation in `atm.js` defines the prompt sequence and awaits the result of `inquirer.prompt(...)`.
+The `atm.js` file defines a prompt array and awaits `inquirer.prompt(...)`.
 
-The active code collects the input values. The earlier random-balance calculation is commented out. Commented code does not execute, so the JavaScript program currently finishes after prompt collection.
+The active implementation collects the answers. An earlier random-balance calculation is commented out, so it does not execute. The JavaScript entrypoint currently ends after the prompt result is collected.
 
-The JavaScript file should therefore be described as an interactive input-flow demonstration, not as a completed withdrawal calculation.
+It should be described as an input-collection example, not a completed balance calculation.
 
 ## 🔷 TypeScript Entry Point
 
-The TypeScript implementation in `atm.ts` defines an answer type and applies it to the result of the prompt call.
+The `atm.ts` file declares an answer type, awaits the prompt result, and then checks whether the user ID and PIN-like value are truthy.
 
-After prompt collection, it checks whether the identifier and PIN-like value are truthy. It then generates a random integer, prints it, reads the amount property, and compares the requested amount with the generated value.
+The active post-prompt code:
+1. Generates a random integer.
+2. Prints the generated value.
+3. Reads the answer amount.
+4. Compares the amount with the generated value.
+5. Prints a demonstration remaining-value or insufficient-value message.
 
-This calculation demonstrates conditional logic. The random integer is not loaded from an account, is not persistent, and is not a real balance.
+The random number is not loaded from an account, is not persistent, and has no relationship with a real user's funds.
 
-The declared answer shape currently assumes a required numeric amount, although the prompt sequence asks for either a fast-cash amount or a manual withdrawal amount conditionally. The manual withdrawal prompt also uses a name with trailing whitespace. These details can cause the declared type and runtime object shape to differ.
+The type declaration assumes a required `amount`, but the prompt sequence collects amount conditionally. The withdrawal prompt also uses a key with trailing whitespace. The answer type and actual runtime shape may therefore differ.
 
 ## 🧩 Prompt Definition Model
 
-Each question is an object in the array passed to Inquirer.
+An Inquirer question is described by an object.
 
-Common properties include:
-
-| Property | Meaning |
+| Property | Purpose |
 |---|---|
-| `type` | Kind of prompt, such as input, number, or list |
-| `name` | Exact property name in the returned answers object |
-| `message` | Text shown to the visitor |
-| `choices` | Options available for a list prompt |
-| `when` | Optional condition deciding whether a question is displayed |
+| `type` | Prompt style such as input, number, or list |
+| `name` | Exact answer object property key |
+| `message` | Prompt message displayed in the terminal |
+| `choices` | Allowed options for a list prompt |
+| `when` | Condition that determines whether the prompt is displayed |
 
-The most important detail for later code is `name`. It determines the answer object's key exactly. A trailing space or spelling difference creates a different key. The current source has a known mismatch around the withdrawal amount key.
+The `name` property is particularly important. Spelling, capitalization, and whitespace are significant. The current source contains a trailing-space mismatch in the withdrawal amount key.
 
 ## 🔄 Answer Object and Data Flow
 
-The general execution flow is:
-
 ```text
-Node.js starts the selected entrypoint
-            |
-            v
-Import Inquirer
-            |
-            v
-Build prompt-definition array
-            |
-            v
-Display first prompt
-            |
-            v
-Collect answer
-            |
-            v
-Evaluate conditional prompt callbacks
-            |
-            v
-Display applicable next question
-            |
-            v
-Resolve the prompt promise
-            |
-            v
-Return answer object
-            |
-            +----------------------+
-            |                      |
-            v                      v
-        atm.js                 atm.ts
-  no active calculation    type-shaped answer
-  after prompt result      random demo comparison
+Node.js starts selected entrypoint
+              |
+              v
+       Import Inquirer
+              |
+              v
+      Define prompt array
+              |
+              v
+     Ask first question
+              |
+              v
+      Collect user input
+              |
+              v
+ Evaluate conditional questions
+              |
+              v
+   Resolve prompt promise
+              |
+              v
+     Return answer object
+              |
+       +------+------+
+       |             |
+       v             v
+     atm.js        atm.ts
+  ends after      type-shaped result
+  collection      random comparison
 ```
 
-No answer is sent to a remote service or written to a database by the inspected source.
+The answer object contains values for questions that were displayed. A conditional field may be absent when its prompt was skipped.
+
+The inspected source does not send these answers to a remote service or store them in a database.
 
 ## 🔀 Conditional Prompt Behaviour
 
-The account category prompt is followed by a transaction type prompt. The transaction type controls which amount prompt appears.
+The account category prompt is followed by a transaction-type prompt. The transaction selection controls the amount prompt.
 
-- When the transaction is fast cash, the fixed list of amounts is displayed.
-- When the transaction is withdrawal, a number prompt is displayed.
+- Fast cash displays the fixed list of preset values.
+- Withdrawal displays a numeric prompt.
 
-The `when` callback receives the answers collected so far. It decides whether the conditional question should be shown.
+The `when` callback receives answers gathered so far. It decides whether a later question should appear.
 
-A conditional answer may be absent from the result if its prompt was not displayed. Types should represent this conditional nature rather than assume every field is always present.
+Because a conditional prompt may not run, its property should not automatically be assumed to exist in every answer object.
 
 ## 🧮 Demonstration Calculation
 
-The TypeScript implementation uses a random value:
+The TypeScript source generates a random integer using:
 
 ```ts
 const balance = Math.floor(Math.random() * 10000000);
 ```
 
-It then compares the entered amount with this value and prints a remaining amount or insufficient-balance message.
+It compares the requested amount to this generated value and prints a message.
 
-This is only a programming demonstration:
-- The number changes between executions.
-- It is not loaded from an account.
-- It is not stored.
-- It is not protected.
+This is only a demonstration:
+- The value changes between executions.
+- It is not retrieved from an account.
+- It is not persisted.
 - It is not authoritative.
-- It does not represent an actual financial balance.
+- It is not protected.
+- It is not a financial balance.
 
-The JavaScript implementation's earlier calculation is commented out and is not active behaviour.
+The JavaScript source has a similar earlier block only as comments, so that code is not active.
 
 ## ⚠️ Current Architectural Limitations
 
-1. Prompt definitions and post-prompt logic are coupled inside the entrypoint files.
-2. JavaScript and TypeScript duplicate the prompt sequence and can drift.
-3. Prompt answer keys contain a known whitespace inconsistency.
-4. The TypeScript answer shape does not fully express conditional values.
-5. There is no isolated validation layer.
-6. There is no reusable transaction domain model.
-7. There is no persistence layer.
-8. There is no authentication or authorization boundary.
-9. There is no automated unit-test suite.
-10. The current package test script is a placeholder.
+- Prompt definitions and post-prompt logic are coupled in the entrypoint files.
+- JavaScript and TypeScript duplicate the flow and can drift.
+- Prompt answer keys contain a known whitespace mismatch.
+- The TypeScript answer type does not accurately represent conditional values.
+- No dedicated validation layer is present.
+- No reusable transaction domain model is present.
+- No persistence boundary exists.
+- No authentication or authorization boundary exists.
+- No automated unit-test suite is configured.
+- The npm test command remains a placeholder.
 
-These limitations are documented. Fixing them would require source or package changes and is outside documentation-only work.
+These are documented limitations. Fixing them would require source, package, or workflow changes.
 
-## 🧱 Possible Future Separation of Concerns
+## 🧱 Possible Future Separation
 
-If the project grows as a learning exercise, a more maintainable design could separate:
+If AATM grows as an educational exercise, a more maintainable structure could separate:
+- Prompt definitions and terminal interaction.
+- Input normalization and validation.
+- Pure demonstration calculations.
+- Terminal output formatting.
+- Automated tests for pure functions.
 
-- **Prompt layer:** Defines the questions and their conditional display.
-- **Input normalization:** Converts and normalizes user-entered values.
-- **Validation layer:** Checks educational business rules such as positive amounts.
-- **Calculation layer:** Implements pure functions that receive mock values and return results.
-- **Output layer:** Formats success, error, and summary messages.
-
-Pure calculation functions can be tested without launching Inquirer prompts. The interactive layer can then focus on collecting input and displaying output.
-
-This is a future design option, not the current source structure.
+This could allow calculation logic to be tested without creating an interactive terminal session. It is a suggested future design, not the current structure.
 
 ## 🛡️ Safe Extension Boundaries
 
 Safe educational extensions may include:
-- Validating that a mock amount is positive.
-- Demonstrating preset amount selection.
-- Returning a calculation result from explicit mock data.
-- Adding pure function tests.
-- Modelling a mock transaction state.
-- Explaining why real authentication and persistence require server-side systems.
+- Positive amount validation for mock input.
+- Predictable mock values for deterministic examples.
+- Pure functions for remaining-value calculations.
+- A clearer simulated transaction summary.
+- Better TypeScript modelling for conditional answers.
+- Explicit cancellation handling.
+- Unit tests for pure functions.
 
-Do not connect the simulation to real accounts or collect real credentials. A production financial system would require a separately designed security, authorization, persistence, audit, fraud-control, compliance, and operational architecture.
+Do not connect the simulation to real financial accounts. A production financial system would require an independent security, authorization, persistence, audit, fraud-control, compliance, and operational architecture.
