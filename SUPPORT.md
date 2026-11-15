@@ -1,45 +1,53 @@
 # 🧭 AATM Support Guide
 
-Welcome to the AATM support guide. This document helps users and contributors identify the right place to ask a question, report a problem, or request an improvement.
+Welcome to the AATM support guide. This document helps visitors, learners, and contributors choose the right place to ask a question, report a reproducible problem, or suggest an improvement.
 
 AATM is a learning-oriented command-line simulation. It uses Inquirer to collect fictional user and transaction-style inputs. It is not connected to a bank and must not be used with real banking credentials or financial information.
 
-Support is provided on a best-effort basis. The project does not promise a guaranteed response time or resolution time.
+Support is provided on a best-effort basis. The project does not promise a guaranteed response time, resolution time, or service-level agreement.
 
 ## 📚 Table of Contents
 
-- [Start Here](#-start-here)
-- [Choose the Right Support Channel](#-choose-the-right-support-channel)
-- [Installation Help](#-installation-help)
-- [Running the JavaScript Program](#-running-the-javascript-program)
-- [TypeScript Validation Help](#-typescript-validation-help)
-- [Interactive Terminal Problems](#-interactive-terminal-problems)
-- [Prompt and Transaction Flow Questions](#-prompt-and-transaction-flow-questions)
-- [JavaScript and TypeScript Differences](#-javascript-and-typescript-differences)
-- [CI and Workflow Problems](#-ci-and-workflow-problems)
-- [Information to Include in a Report](#-information-to-include-in-a-report)
-- [Security and Privacy](#-security-and-privacy)
-- [Support Expectations](#-support-expectations)
-- [Maintainer Triage Checklist](#-maintainer-triage-checklist)
+- [🚦 Start Here](#-start-here)
+- [🧭 Choose the Right Support Channel](#-choose-the-right-support-channel)
+- [📦 Installation Help](#-installation-help)
+- [▶️ Running the JavaScript Program](#️-running-the-javascript-program)
+- [🔷 TypeScript Validation Help](#-typescript-validation-help)
+- [⌨️ Interactive Terminal Problems](#️-interactive-terminal-problems)
+- [🔀 Prompt and Transaction Flow Questions](#-prompt-and-transaction-flow-questions)
+- [⚖️ JavaScript and TypeScript Differences](#️-javascript-and-typescript-differences)
+- [⚙️ CI and Workflow Problems](#️-ci-and-workflow-problems)
+- [🧾 Information to Include in a Report](#-information-to-include-in-a-report)
+- [✍️ Writing a Useful Support Request](#️-writing-a-useful-support-request)
+- [🔐 Security and Privacy](#-security-and-privacy)
+- [🚧 Support Boundaries](#-support-boundaries)
+- [🛠️ Maintainer Triage Checklist](#️-maintainer-triage-checklist)
 
 ## 🚦 Start Here
 
-For a general understanding, read [README.md](README.md). For a first local run, follow [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). For prompt behaviour, read [docs/TRANSACTION-FLOW.md](docs/TRANSACTION-FLOW.md). For known issues, review [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
+If you are new to the repository, follow this order:
 
-Before opening an issue, search existing issues and verify that you are working from the current default branch.
+1. Read [README.md](README.md) for the overview and quick setup.
+2. Read [docs/README.md](docs/README.md) for the technical documentation index.
+3. Follow [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) to install and run the project.
+4. Read [docs/TRANSACTION-FLOW.md](docs/TRANSACTION-FLOW.md) to understand the prompt paths.
+5. Read [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) if a command or prompt fails.
+6. Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a code change.
+
+Before opening an issue, search existing reports and verify that the problem can be reproduced on the current default branch.
 
 ## 🧭 Choose the Right Support Channel
 
-| Need | Recommended channel |
-|---|---|
-| Reproducible code problem | Bug report issue template |
-| New learning-oriented idea | Feature request issue template |
-| Unclear setup instruction | Documentation issue or focused pull request |
-| General usage question | GitHub Discussions, if enabled |
-| Security vulnerability | Private reporting via SECURITY.md |
-| Conduct concern | Private contact with repository owner |
+| Request type | Recommended channel | Notes |
+|---|---|---|
+| Reproducible application defect | Bug report issue template | Include steps and environment |
+| New learning-oriented idea | Feature request issue template | Explain the problem and expected result |
+| Incorrect or unclear instructions | Documentation issue or focused PR | Identify the exact file and section |
+| General usage question | GitHub Discussions, if enabled | Search existing discussions first |
+| Vulnerability | Private reporting described in SECURITY.md | Never publish exploit details |
+| Conduct concern | Private contact with repository owner | Do not expose personal details |
 
-Do not publish credentials or personal data in any public channel.
+Do not create multiple reports for the same problem unless there is a clear reason to track separate work.
 
 ## 📦 Installation Help
 
@@ -51,14 +59,14 @@ cd AATM
 npm ci
 ```
 
-Check the environment:
+Check the runtime versions:
 
 ```bash
 node --version
 npm --version
 ```
 
-If installation fails, include the full command and the first relevant error. Confirm that the terminal is in the repository root and that the package lockfile is present. Do not delete the lockfile or change package managers as the first troubleshooting action.
+If installation fails, include the exact command and the first meaningful error. Confirm that the terminal is in the repository root and that the lockfile exists. Do not delete the lockfile or switch package managers as the first troubleshooting action.
 
 ## ▶️ Running the JavaScript Program
 
@@ -68,117 +76,139 @@ Run:
 node atm.js
 ```
 
-Use a real interactive terminal that supports keyboard input. Some CI panels and IDE output panes do not provide a TTY, so the prompts may not display or accept input there.
+Use a real interactive terminal that supports keyboard input. Some CI panels and IDE output panes do not provide a TTY, so prompts may not display or accept input there.
 
-The current JavaScript implementation collects prompt answers and ends. It does not run the active balance comparison found in the TypeScript source.
+The current JavaScript implementation collects the answers and ends. It does not run the active random-value comparison found in the TypeScript source.
 
 ## 🔷 TypeScript Validation Help
 
 The repository includes TypeScript source and a compiler configuration, but the TypeScript compiler is not currently declared as a direct project development dependency.
 
-Use the existing check:
+Use the existing type-check command:
 
 ```bash
 npx --yes --package typescript tsc --noEmit
 ```
 
-This command checks types but does not execute the interactive TypeScript program. If the compiler reports an error, include the exact output and Node.js/npm versions.
+This command validates the source but does not execute the interactive TypeScript application. Include the exact compiler output and your runtime versions when asking for help.
 
-## 🖥️ Interactive Terminal Problems
+## ⌨️ Interactive Terminal Problems
 
-Interactive prompts require terminal input support. If prompts do not appear:
+Inquirer requires an interactive terminal. If prompts do not appear:
+
 - Run from a normal terminal window.
-- Confirm the process is not running in a non-interactive CI step.
 - Confirm dependencies installed successfully.
-- Check whether a previous prompt process is still running.
-- Try the command again from the repository root.
+- Confirm the terminal accepts keyboard input.
+- Check whether the process is running in a non-interactive task runner.
+- Run the command again from the repository root.
 
-If the program exits after Ctrl+C, that is a cancellation path rather than necessarily a defect.
+If the visitor cancels with Ctrl+C, the process may exit. That is not necessarily a prompt defect.
 
 ## 🔀 Prompt and Transaction Flow Questions
 
-The program uses Inquirer prompt definitions. Each question's `name` property becomes an exact property name in the answer object. Spelling and whitespace matter.
+Each Inquirer prompt uses a `name` property. That exact value becomes a property key in the returned answers object. Spelling and whitespace are significant.
 
-The current source has a known trailing-space difference in the withdrawal amount key. If an amount appears missing, check the prompt's `name` value and the code that reads the returned answer.
+The current source has a known trailing-space mismatch in the withdrawal amount key. If an amount appears missing, inspect the prompt's exact `name` and the property later read by the code.
 
-Use [docs/TRANSACTION-FLOW.md](docs/TRANSACTION-FLOW.md) to understand the two conditional paths.
+See [docs/TRANSACTION-FLOW.md](docs/TRANSACTION-FLOW.md) for the two conditional branches.
 
-## 🔷 JavaScript and TypeScript Differences
+## ⚖️ JavaScript and TypeScript Differences
 
-The implementations are not identical:
-- JavaScript collects prompts and then ends.
-- TypeScript includes a demonstration random-value calculation.
-- The withdrawal amount answer key has a whitespace mismatch.
-- The TypeScript answer type does not fully express the conditional prompt result.
+The current implementations are not identical:
+- JavaScript collects prompt answers and then ends.
+- TypeScript contains a random-value demonstration calculation.
+- The withdrawal amount key contains a whitespace mismatch.
+- The TypeScript answer type does not fully represent conditional results.
 
-These are known limitations. Do not open duplicate reports unless you have found a distinct symptom or regression.
+These are known limitations. Do not open duplicate reports unless a separate regression or distinct symptom has been found.
 
 ## ⚙️ CI and Workflow Problems
 
 The current CI workflow checks:
-- JavaScript syntax with `node --check atm.js`.
-- TypeScript types with `npx --yes --package typescript tsc --noEmit`.
+- JavaScript syntax using `node --check atm.js`.
+- TypeScript types using `npx --yes --package typescript tsc --noEmit`.
 
-It does not run an interactive terminal session or a unit-test suite. The package `npm test` script is a placeholder that exits with an error.
+It does not run an interactive terminal session and does not execute a unit-test suite. The npm `test` script is currently a placeholder that exits with an error.
 
-When CI fails, identify the exact workflow job and step. Include the error output without secrets.
+When CI fails, identify the exact workflow job and step. Include the relevant sanitized error output, but never include secrets.
 
 ## 🧾 Information to Include in a Report
-
-A useful report includes:
 
 | Detail | Why it helps |
 |---|---|
 | Commit or branch | Identifies the code being tested |
-| Operating system | Helps diagnose environment-specific failures |
+| Operating system | Helps diagnose environment-specific behaviour |
 | Node.js version | Identifies runtime differences |
-| npm version | Helps diagnose install and package issues |
+| npm version | Helps diagnose package installation |
 | Exact command | Makes the failure reproducible |
-| Prompt answers | Shows which branch was selected, using fictional values |
-| Expected output | Defines intended behaviour |
-| Actual output | Describes the observed behaviour |
+| Prompt path | Shows which conditional branch was selected |
+| Expected output | Defines the intended behaviour |
+| Actual output | Describes the observed result |
 | Error message | Provides technical evidence |
 | Terminal type | Identifies interactive input limitations |
 
-Use this format:
+Use fictional prompt values. Redact personal information and credentials from all terminal output.
+
+## ✍️ Writing a Useful Support Request
+
+A helpful request can follow this structure:
 
 ```text
 Title:
+Repository commit:
 Environment:
+Operating system:
 Node.js:
 npm:
+Terminal:
 Command:
+Affected file or prompt:
+
 Steps to reproduce:
+1.
+2.
+3.
+
 Expected result:
 Actual result:
 Error output:
+Does it affect JavaScript, TypeScript, or both?
 Additional context:
 ```
 
-Do not include real IDs, PINs, banking details, credentials, or private user information.
+For a feature proposal, explain the user problem, expected outcome, alternatives, and acceptance criteria rather than presenting only an implementation idea.
 
 ## 🔐 Security and Privacy
 
 AATM is not a financial product. Never enter real banking information.
 
-Do not use public issues to report vulnerabilities or disclose secrets. Follow [SECURITY.md](SECURITY.md). Do not post private messages, real customer information, or screenshots with sensitive values.
+Do not use a public issue to report a vulnerability or disclose secrets. Follow [SECURITY.md](SECURITY.md). Do not post private messages, customer information, passwords, PINs, or screenshots containing sensitive values.
 
-## ⏳ Support Expectations
+For conduct concerns, use the private reporting path described in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-Support is best-effort. Reports with clear reproduction steps and relevant environment details are easier to investigate. The maintainer may ask for additional information, prioritize a different issue, or decide that a request falls outside the educational scope.
+## 🚧 Support Boundaries
 
-Support does not include recovering third-party credentials, accessing bank accounts, debugging unauthorized environments, or providing financial or legal advice.
+Support does not include:
+- Recovery of third-party account credentials.
+- Access to bank accounts or financial systems.
+- Debugging systems that the reporter is not authorized to access.
+- Guaranteed implementation of every feature request.
+- Legal or financial advice.
+- A promised response or resolution time.
+
+The project can help investigate reproducible problems in this repository. Issues with Node.js, npm, GitHub, or third-party provider infrastructure may need to be raised with the relevant provider.
 
 ## 🛠️ Maintainer Triage Checklist
 
-- [ ] Correct issue channel selected.
-- [ ] Duplicate issue checked.
-- [ ] Commit and environment identified.
+- [ ] The request uses the correct channel.
+- [ ] Existing issues were checked.
+- [ ] The affected commit and environment are known.
 - [ ] Reproduction steps are clear.
-- [ ] Fictional values are used.
+- [ ] Only fictional sample values are included.
 - [ ] Logs have been checked for secrets.
 - [ ] JavaScript versus TypeScript behaviour is identified.
 - [ ] Known limitations have been considered.
-- [ ] Next action is clear.
+- [ ] The severity and scope are clear.
+- [ ] The next action is communicated.
 
 Thank you for providing clear, safe, and reproducible reports.
