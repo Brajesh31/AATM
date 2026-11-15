@@ -1,15 +1,23 @@
 {
-  "name": "project02",
+  "name": "aatm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Educational command-line ATM flow simulation using Node.js, Inquirer, JavaScript, and TypeScript.",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "atm-simulation",
+    "command-line",
+    "inquirer",
+    "nodejs",
+    "javascript",
+    "typescript",
+    "education"
+  ],
+  "author": "Brajesh Kumar",
+  "license": "MIT",
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.10.6"
